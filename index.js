@@ -2,9 +2,9 @@ const db = require("./config/connection");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
-db.connect(function (err) {
+db.connect((err) => {
   if (err) throw err;
-  console.log("Connected to Database!");
+  console.log("Connected!");
   menu();
 });
 
@@ -99,13 +99,13 @@ const addDepartment = () => {
     .prompt([
       {
         type: "input",
-        name: "department",
-        message: "Enter the name of your department!",
+        name: "department_name",
+        message: "Enter name of new department! (Required)",
         validate: (depo) => {
           if (depo) {
             return true;
           } else {
-            console.log("Please enter a department!");
+            console.log("Please enter a new department name!");
             return false;
           }
         },
@@ -279,7 +279,6 @@ const updateEmployee = () => {
         .then((answers) => {
           const updateArry = [];
           const employeeId = answers.employee;
-          // updateArry.push(employeeId)
 
           db.promise()
             .query(`SELECT * FROM employee WHERE id=${employeeId}`)
